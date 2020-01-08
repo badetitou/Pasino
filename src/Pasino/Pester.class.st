@@ -39,11 +39,12 @@ Pester >> cssBlinder [
 { #category : #accessing }
 Pester >> do [
 	self init.
+	[ 
 	self getPage.
 	self applyCss.
 	self pagesName do: [ :pageName | 
-		self crawlPageAndScreenshot: pageName ].
-	self quit.
+		self crawlPageAndScreenshot: pageName ] 
+	] ensure: [ self quit ]
 ]
 
 { #category : #accessing }

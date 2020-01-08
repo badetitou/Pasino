@@ -32,6 +32,13 @@ Class {
 	#category : #Pasino
 }
 
+{ #category : #'instance creation' }
+AngularPester class >> fromPagesName: names [
+	^ self new
+		  pagesName: names;
+		  yourself
+]
+
 { #category : #accessing }
 AngularPester >> crawlPage: aPageName [
 	(driver findElementByID: 'quickAccess') click.
