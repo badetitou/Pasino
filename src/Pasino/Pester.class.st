@@ -13,6 +13,7 @@ Pester >> applyCss [
 	self driver
 		executeScript: '
 var sheet = document.createElement("style");
+sheet.id = "furry";
 sheet.innerHTML = "' , self cssBlinder , '";
 document.body.appendChild(sheet);
 '
@@ -28,7 +29,8 @@ Pester >> crawlPage: aPageName [
 { #category : #accessing }
 Pester >> crawlPageAndScreenshot: pageName [
 	self crawlPage: pageName.
-	self screenshotAndSave: pageName
+	self screenshotAndSave: pageName.
+	(self driver findElementByClassName: 'bl-home-icon') click
 ]
 
 { #category : #accessing }
@@ -41,7 +43,6 @@ Pester >> do [
 	self init.
 	[ 
 	self getPage.
-	self applyCss.
 	self pagesName do: [ :pageName | 
 		self crawlPageAndScreenshot: pageName ] 
 	] ensure: [ self quit ]
@@ -84,9 +85,16 @@ Pester >> quit [
 
 { #category : #accessing }
 Pester >> screenshotAndSave: filename [
+
+	2 seconds wait.
+	self applyCss.
 	PNGReadWriter
-		putForm: (Form fromBinaryStream: driver getScreenshotAsByteArray readStream)
-		onFileNamed: filename , '.png'
+		putForm:
+		(Form fromBinaryStream: driver getScreenshotAsByteArray readStream)
+		onFileNamed: filename , '.png'.
+	self driver
+		executeScript: 'document.getElementById("furry").remove();'
+		with: {  }
 ]
 
 { #category : #accessing }

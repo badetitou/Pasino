@@ -41,8 +41,10 @@ AngularPester class >> fromPagesName: names [
 
 { #category : #accessing }
 AngularPester >> crawlPage: aPageName [
-	(driver findElementByID: 'quickAccess') click.
-	driver getKeyboard sendKeys: (aPageName , (String with: BPKeys return)).
+	(driver findElementByID: 'quickAccess')
+		click;
+		clear.
+	driver getKeyboard sendKeys: aPageName , (String with: BPKeys return)
 ]
 
 { #category : #accessing }
