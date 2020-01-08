@@ -30,7 +30,7 @@ Pester >> crawlPage: aPageName [
 Pester >> crawlPageAndScreenshot: pageName [
 	self crawlPage: pageName.
 	self screenshotAndSave: pageName.
-	(self driver findElementByClassName: 'bl-home-icon') click
+	(self driver findElementByClassName: 'bl-tab-header-close-link') click.
 ]
 
 { #category : #accessing }
@@ -85,9 +85,9 @@ Pester >> quit [
 
 { #category : #accessing }
 Pester >> screenshotAndSave: filename [
-
-	2 seconds wait.
+	1 seconds wait.
 	self applyCss.
+	1 seconds wait.
 	PNGReadWriter
 		putForm:
 		(Form fromBinaryStream: driver getScreenshotAsByteArray readStream)
