@@ -31,3 +31,14 @@ Class {
 	#superclass : #Pester,
 	#category : #Pasino
 }
+
+{ #category : #accessing }
+AngularPester >> crawlPage: aPageName [
+	(driver findElementByID: 'quickAccess') click.
+	driver getKeyboard sendKeys: (aPageName , (String with: BPKeys return)).
+]
+
+{ #category : #accessing }
+AngularPester >> url [
+	^ 'http://localhost:4200'
+]
