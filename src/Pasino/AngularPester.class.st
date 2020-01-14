@@ -32,19 +32,18 @@ Class {
 	#category : #Pasino
 }
 
-{ #category : #'instance creation' }
-AngularPester class >> fromPagesName: names [
-	^ self new
-		  pagesName: names;
-		  yourself
-]
-
 { #category : #accessing }
 AngularPester >> crawlPage: aPageName [
 	(self driver findElementByID: 'quickAccess')
 		clear;
 		click.
 	self driver getKeyboard sendKeys: aPageName , (String with: BPKeys return)
+]
+
+{ #category : #accessing }
+AngularPester >> quitPage: aPageName [
+	(self driver findElementByClassName: 'bl-tab-header-close-link')
+		click
 ]
 
 { #category : #accessing }

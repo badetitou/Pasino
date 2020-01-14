@@ -8,6 +8,13 @@ Class {
 	#category : #Pasino
 }
 
+{ #category : #'instance creation' }
+Pester class >> fromPagesName: names [
+	^ self new
+		  pagesName: names;
+		  yourself
+]
+
 { #category : #accessing }
 Pester >> applyCss [
 	self driver
@@ -30,7 +37,7 @@ Pester >> crawlPage: aPageName [
 Pester >> crawlPageAndScreenshot: pageName [
 	self crawlPage: pageName.
 	self screenshotAndSave: pageName.
-	(self driver findElementByClassName: 'bl-tab-header-close-link') click.
+	self quitPage: pageName.
 ]
 
 { #category : #accessing }
@@ -81,6 +88,11 @@ Pester >> pagesName: anObject [
 { #category : #accessing }
 Pester >> quit [
 	self driver quit
+]
+
+{ #category : #accessing }
+Pester >> quitPage: pageName [
+	"can be extended"
 ]
 
 { #category : #accessing }
