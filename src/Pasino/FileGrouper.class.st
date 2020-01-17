@@ -25,7 +25,13 @@ FileGrouper >> getTargetImageOf: page [
 
 { #category : #accessing }
 FileGrouper >> group [
-	^ self pages collect: [ :page | (self getSrcImageOf: page)  -> (self getTargetImageOf: page) ] as: OrderedCollection
+	^ self pages
+		  collect: [ :page | 
+			  FileGroup new
+				  sourceImage: (self getSrcImageOf: page);
+				  targetImage: (self getTargetImageOf: page);
+				  yourself ]
+		  as: OrderedCollection
 ]
 
 { #category : #accessing }
