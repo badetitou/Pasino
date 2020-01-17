@@ -3,7 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'sourceImage',
-		'targetImage'
+		'targetImage',
+		'sourcePath',
+		'targetPath'
 	],
 	#category : #Pasino
 }
@@ -13,8 +15,7 @@ FileGroup >> gtSrcImageIn: composite [
 	<gtInspectorPresentationOrder: 1000>
 	^ composite morph
 		  title: 'srcImage';
-		  display: [ :anObject | 
-			  ImageMorph fromStream: self sourceImage binaryReadStream ];
+		  display: [ :anObject | self sourceImage ];
 		  yourself
 ]
 
@@ -23,23 +24,22 @@ FileGroup >> gtTargetImageIn: composite [
 	<gtInspectorPresentationOrder: 1000>
 	^ composite morph
 		  title: 'targetImage';
-		  display: [ :anObject | 
-			  ImageMorph fromStream: self targetImage binaryReadStream ];
+		  display: [ :anObject | self targetImage ];
 		  yourself
 ]
 
 { #category : #accessing }
 FileGroup >> printOn: aStream [
 	aStream nextPutAll: 'fileGroup (';
-		nextPutAll: self sourceImage basenameWithoutExtension;
+		nextPutAll: self sourcePath basenameWithoutExtension;
 		nextPutAll: ' , ';
-		nextPutAll: self targetImage basenameWithoutExtension;
+		nextPutAll: self targetPath basenameWithoutExtension;
 		nextPut: $)
 ]
 
 { #category : #accessing }
 FileGroup >> sourceImage [
-	^ sourceImage
+	^ sourceImage ifNil: [ sourceImage := ImageMorph fromStream: self sourcePath binaryReadStream ]
 ]
 
 { #category : #accessing }
@@ -48,11 +48,31 @@ FileGroup >> sourceImage: anObject [
 ]
 
 { #category : #accessing }
+FileGroup >> sourcePath [
+	^ sourcePath
+]
+
+{ #category : #accessing }
+FileGroup >> sourcePath: anObject [
+	sourcePath := anObject
+]
+
+{ #category : #accessing }
 FileGroup >> targetImage [
-	^ targetImage
+	^ targetImage ifNil: [ targetImage := ImageMorph fromStream: self targetPath binaryReadStream ]
 ]
 
 { #category : #accessing }
 FileGroup >> targetImage: anObject [
 	targetImage := anObject
+]
+
+{ #category : #accessing }
+FileGroup >> targetPath [
+	^ targetPath
+]
+
+{ #category : #accessing }
+FileGroup >> targetPath: anObject [
+	targetPath := anObject
 ]

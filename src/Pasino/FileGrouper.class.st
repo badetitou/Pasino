@@ -28,8 +28,8 @@ FileGrouper >> group [
 	^ self pages
 		  collect: [ :page | 
 			  FileGroup new
-				  sourceImage: (self getSrcImageOf: page);
-				  targetImage: (self getTargetImageOf: page);
+				  sourcePath: (self getSrcImageOf: page);
+				  targetPath: (self getTargetImageOf: page);
 				  yourself ]
 		  as: OrderedCollection
 ]
