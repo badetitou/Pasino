@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'pagesName',
-		'driver'
+		'driver',
+		'cssBlinderCache'
 	],
 	#category : #Pasino
 }
@@ -45,7 +46,11 @@ Pester >> crawlPageAndScreenshot: pageName [
 
 { #category : #accessing }
 Pester >> cssBlinder [
-	^ '* {      color: transparent !important;      background-color: transparent !important;      background-image: none !important;      border-color: black !important;  }    img {       visibility:hidden  }    input, button,i, bl-desktop-phase-home-tab-header, bl-desktop-phase-tab-header,span {       visibility:hidden  }      select {       visibility:hidden  }    bl-fieldset {           box-shadow: 1px 2px 1px  transparent!important;  }    fieldset {        box-shadow: 1px 2px 1px  transparent !important;  margin-left: 0px !important;  padding-left: 0px !important;  }    fieldset>.card-body {   background: rgba(0,0,0, 0.5) !important;  }    legend {   background: rgba(0,0,0, 0.5) !important;      box-shadow: 1px 0px 0px  transparent!important;  }      .BLFieldSetPanel>tbody>tr:nth-child(1)>.BLFieldSetPanel-border-hori ,.BLFieldSetPanel-content,  .gwt-DisclosurePanel>tbody>tr {     background: rgba(0,0,0, 0.5) !important;  }    table.BLFieldSetPanel, table.gwt-DisclosurePanel  {      margin-top: 0px;      padding-top: 5px;  }'
+	^ cssBlinderCache ifNil: [ 
+		 ( self resourcesFileReference / 'hide.css') exists
+			  ifTrue: [ (self resourcesFileReference / 'hide.css') contents reject: [ :each | each isSeparator ] ]
+			  ifFalse: [ "default blinder css" 
+				  '* {      color: transparent !important;      background-color: transparent !important;      background-image: none !important;      border-color: black !important;  }    img {       visibility:hidden  }    input, button,i, bl-desktop-phase-home-tab-header, bl-desktop-phase-tab-header,span {       visibility:hidden  }      select {       visibility:hidden  }    bl-fieldset {           box-shadow: 1px 2px 1px  transparent!important;  }    fieldset {        box-shadow: 1px 2px 1px  transparent !important;  margin-left: 0px !important;  padding-left: 0px !important;  }    fieldset>.card-body {   background: rgba(0,0,0, 0.5) !important;  }    legend {   background: rgba(0,0,0, 0.5) !important;      box-shadow: 1px 0px 0px  transparent!important;  }      .BLFieldSetPanel>tbody>tr:nth-child(1)>.BLFieldSetPanel-border-hori ,.BLFieldSetPanel-content,  .gwt-DisclosurePanel>tbody>tr {     background: rgba(0,0,0, 0.5) !important;  }    table.BLFieldSetPanel, table.gwt-DisclosurePanel  {      margin-top: 0px;      padding-top: 5px;  }' ] ]
 ]
 
 { #category : #accessing }
@@ -96,6 +101,18 @@ Pester >> quit [
 { #category : #accessing }
 Pester >> quitPage: pageName [
 	"can be extended"
+]
+
+{ #category : #'private - accessing' }
+Pester >> resourcesFileReference [
+	| repo |
+	repo := (IceRepository registry
+		         detect: [ :each | each includesPackageNamed: 'Pasino' ]
+		         ifNone: [ 
+			         self error:
+				         'Please add a clone of this project to Iceberg to access to the resources' ])
+		        location.
+	^ repo / 'res'
 ]
 
 { #category : #accessing }
