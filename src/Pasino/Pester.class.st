@@ -35,9 +35,12 @@ Pester >> crawlPage: aPageName [
 
 { #category : #accessing }
 Pester >> crawlPageAndScreenshot: pageName [
+	[ 
 	self crawlPage: pageName.
-	self screenshotAndSave: pageName.
-	self quitPage: pageName.
+	self screenshotAndSave: pageName ]
+		on: CantCrawlPageException
+		do: [ Transcript crTrace: 'can''t access ' , pageName ].
+	self quitPage: pageName
 ]
 
 { #category : #accessing }
