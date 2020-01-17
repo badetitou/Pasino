@@ -42,8 +42,8 @@ GWTPester >> getPage [
 { #category : #accessing }
 GWTPester >> quitPage: aPageName [
 	([ 
-	 self driver findElementByID:
-		 'gwt-debug-root-body___-ws_2-BLVerticalPanel-TabDeskPanel_1-TabDeskBar-DIV_4-DIV_1-BLImageButton' ]
+	 self driver findElementByClassName:
+		 'ItemRightButton' ]
 		 on: BPNoSuchElementException
 		 do: [ ^ nil ]) click
 ]
